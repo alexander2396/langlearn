@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Langlearn.WebUI", "Langlearn\Langlearn.WebUI.csproj", "{EA865F48-4F51-4ADF-9273-82471D9767EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Langlearn.WebUI", "Langlearn.WebUI\Langlearn.WebUI.csproj", "{EA865F48-4F51-4ADF-9273-82471D9767EC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Langlearn.Domain", "Langlearn.Domain\Langlearn.Domain.csproj", "{E4B95EDF-ABD1-48CE-A69C-56805084FFF8}"
 EndProject
