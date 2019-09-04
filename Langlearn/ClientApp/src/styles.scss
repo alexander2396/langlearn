@@ -1,0 +1,29 @@
+@import "./scss/custom"; 
+//Here we importing _custom.scss file but we don't need to include underscore.
+$theme:   mat-light-theme($primary,$accent,$warn);
+@include angular-material-theme($theme);
+
+@import './scss/_variables.scss';
+
+body {
+    margin: 0;
+}
+
+.app-body {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.header {
+    background-color: $header-bg-color;
+    color: $header-font-color;
+
+    .logo {
+        font-size: 24px;
+    }
+}

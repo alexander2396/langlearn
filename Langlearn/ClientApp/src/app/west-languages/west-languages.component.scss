@@ -1,0 +1,21 @@
+@import '../../scss/variables';
+
+.sidebar {
+    position: fixed;
+    border: none;
+    top: 64px;
+
+    .navbar {
+        margin: 30px 0 30px 30px;
+        width: 150px;
+        max-height: 75vh;
+        overflow: auto;
+        padding: 10px;
+        background-color: $sidebar-bg-color;
+    }
+}
+
+.content {
+    padding: 30px;
+    background-color: $main-bg-color;
+}

@@ -1,0 +1,10 @@
+<mat-drawer-container>
+    <mat-drawer class="sidebar" mode="side" opened>
+        <div class="navbar">
+            <button mat-button routerLink="words">Words</button>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content class="content">
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>
