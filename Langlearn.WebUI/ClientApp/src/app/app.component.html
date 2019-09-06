@@ -2,10 +2,11 @@
 	<mat-toolbar class="header">
 		<a mat-button class="logo" routerLink="/">Languager</a>
 	
-		<button mat-button [matMenuTriggerFor]="menu">Languages</button>
+		<button mat-button [matMenuTriggerFor]="menu">{{ selectedLanguage ? selectedLanguage.name : 'Languages' }}</button>
 		<mat-menu #menu="matMenu">
-			<button mat-menu-item routerLink="/west-languages/english">English</button>
-			<button mat-menu-item routerLink="/west-languages/spanish">Spanish</button>
+			<button *ngFor="let language of languages | async" (click)="selectedLanguage = language" mat-menu-item [routerLink]="'/west-languages/' + language.id">
+				{{ language.name }}
+			</button>
 		</mat-menu>
 	</mat-toolbar>
 	

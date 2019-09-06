@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-//using FluentValidation.AspNetCore;
+using FluentValidation.AspNetCore;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
@@ -14,7 +14,8 @@ using System.Reflection;
 using Langlearn.Application.Infrastructure;
 using Langlearn.Application.Infrastructure.AutoMapper;
 using Langlearn.Application.Interfaces;
-using Langlearn.Application.Languages.Queries.GetLanguagesList;
+using Langlearn.Application.WestLanguages.Languages.Queries.GetLanguagesList;
+using Langlearn.Application.WestLanguages.Words.Commands.CreateWord;
 //using Northwind.Common;
 //using Northwind.Infrastructure;
 using Langlearn.DataAccess;
@@ -48,7 +49,8 @@ namespace Langlearn.WebUI
 			services.AddDbContext<IWestLanguagesContext, WestLanguagesContext>(options =>
 				options.UseSqlServer(Configuration.GetConnectionString("WestLanguagesDatabase")));
 
-			services.AddMvc();
+			services.AddMvc()
+				.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(typeof(CreateWordCommandValidator).Assembly));
 
 			// Customise default API behavour
 			services.Configure<ApiBehaviorOptions>(options =>
@@ -70,9 +72,18 @@ namespace Langlearn.WebUI
 				app.UseHsts();
 			}
 
+			app.UseCors(builder =>
+			{
+				builder
+					.AllowAnyOrigin()
+					.AllowAnyMethod()
+					.AllowAnyHeader()
+					.AllowCredentials();
+			});
+
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
-			app.UseSpaStaticFiles();
+			//app.UseSpaStaticFiles();
 
 			//app.UseSwaggerUi3(settings =>
 			//{
@@ -80,25 +91,7 @@ namespace Langlearn.WebUI
 			//	settings.DocumentPath = "/api/specification.json";
 			//});
 
-			app.UseMvc(routes =>
-			{
-				routes.MapRoute(
-					name: "default",
-					template: "{controller}/{action=Index}/{id?}");
-			});
-
-			app.UseSpa(spa =>
-			{
-				// To learn more about options for serving an Angular SPA from ASP.NET Core,
-				// see https://go.microsoft.com/fwlink/?linkid=864501
-
-				spa.Options.SourcePath = "ClientApp";
-
-				if (env.IsDevelopment())
-				{
-					spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-				}
-			});
+			app.UseMvc();
 		}
 	}
 }

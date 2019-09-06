@@ -3,7 +3,8 @@
 $theme:   mat-light-theme($primary,$accent,$warn);
 @include angular-material-theme($theme);
 
-@import './scss/_variables.scss';
+@import './scss/_variables';
+@import './scss/form';
 
 body {
     margin: 0;
@@ -20,10 +21,78 @@ body {
 }
 
 .header {
-    background-color: $header-bg-color;
+    background-color: $primarly-color;
     color: $header-font-color;
 
     .logo {
         font-size: 24px;
     }
+}
+
+table {
+    width: 100%;
+}
+
+.mat-card {
+    .card-header {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background: rgba(0,0,0,.03);
+        border: none;
+
+        h2 {
+            margin: 0;
+        }
+    
+        button {
+            margin: 0 0 0px 20px;
+        }
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+}
+
+.mat-dialog-actions {
+    margin: 24px 0 0 0 !important;
+    padding: 0 !important;
+    min-height: auto!important;
+}
+
+.positive-snackbar {
+    color:                  white;
+    background-color:       #009b00;
+}
+
+.positive-snackbar mat-icon {
+    font-size:          42px;
+    width:              42px;
+    height:             42px;
+    vertical-align:     middle;
+}
+
+.warning-snackbar {
+    color:                  white;
+    background-color:       #9b9b00;
+}
+
+.warning-snackbar mat-icon {
+    font-size:          42px;
+    width:              42px;
+    height:             42px;
+    vertical-align:     middle;
+}
+
+.negative-snackbar {
+    color:                  white;
+    background-color:       #d32f2f;
+}
+
+.negative-snackbar mat-icon {
+    font-size:          42px;
+    width:              42px;
+    height:             42px;
+    vertical-align:     middle;
 }

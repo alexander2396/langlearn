@@ -1,0 +1,39 @@
+<mat-card>
+
+    <div class="card-header">
+		<h2>Practice Words</h2>
+    </div>
+
+    <mat-button-toggle-group #group="matButtonToggleGroup" class="mt-4 ml-5">
+        <mat-button-toggle [checked]="fromEnglish" (click)="changeMode(true)">
+            From english
+        </mat-button-toggle>
+        <mat-button-toggle [checked]="!fromEnglish" (click)="changeMode(false)">
+            From russian
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div class="card-body">
+        <ng-container *ngIf="words">
+            <div class="practice-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="content">
+                        <span *ngIf="fromEnglish">{{ words[currentWordIndex].text }}</span>
+                        <span *ngIf="!fromEnglish">{{ words[currentWordIndex].translation }}</span>
+                    </div>
+                    <div class="counter">{{ currentWordIndex + 1 }} / {{ words.length }}</div>
+                </div>            
+                <div class="answer">
+                    <mat-form-field class="example-full-width">
+                        <input matInput [(ngModel)]="answer" autocomplete="off" />
+                    </mat-form-field>              
+                </div>
+                <div class="buttons">
+                    <button color="primary" mat-raised-button (click)="submit()" [disabled]="!answer">Confirm</button>
+                </div>
+            </div>
+        </ng-container>
+        <div *ngIf="!words">Loading...</div>
+    </div>
+
+</mat-card>

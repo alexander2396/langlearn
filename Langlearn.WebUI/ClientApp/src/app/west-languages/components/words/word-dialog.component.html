@@ -1,0 +1,32 @@
+<mat-dialog-content>
+
+    <h2 mat-dialog-title (click)="submitForm()">{{data.dialogTitle}}</h2>
+
+    <form [formGroup]="wordForm" autocomplete="off">
+        
+        <mat-form-field>
+            <input matInput #text placeholder="Text" formControlName="text">
+            <mat-error *ngIf="wordForm.controls.text.errors && wordForm.controls.text.errors.required">
+                Text is Required
+            </mat-error>
+            <mat-error *ngIf="wordForm.controls.text.errors && wordForm.controls.text.errors.pattern">
+                Please enter a valid word
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput #translation placeholder="Translation" formControlName="translation">
+            <mat-error *ngIf="wordForm.controls.translation.errors && wordForm.controls.translation.errors.required">
+                Translation is Required
+            </mat-error>
+        </mat-form-field>
+
+    </form>
+    
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button (click)="this.dialogRef.close()" [disabled]="this.wordForm.disabled">Cancel</button>
+    <button color="primary" [disabled]="!wordForm.valid || this.wordForm.disabled || wordForm.pristine" 
+        mat-raised-button [mat-dialog-close]="wordForm.value">Submit</button>
+</mat-dialog-actions>

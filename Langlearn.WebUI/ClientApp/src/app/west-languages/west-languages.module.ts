@@ -1,19 +1,33 @@
 import { NgModule } from '@angular/core';
 import { WordsListComponent } from './components/words/words-list.component';
 import { WestLanguagesRoutingModule } from './west-languages-routing.module';
-import { MaterialModule } from '../material.module';
-import { WestLanguagesComponent } from './west-languages.component';
+import { WestLanguagesComponent } from './components/west-languages.component';
+import { WordsApi } from './api/words.api';
+import { WordsState } from './state/words.state';
+import { WordsFacade } from './facade/words.facade';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
+import { WordDialog } from './components/words/word-dialog.component';
+import { PractiseComponent } from './components/practise/practise.component';
 
 @NgModule({
     imports: [
+        CommonModule,
         WestLanguagesRoutingModule,
-        MaterialModule
+        SharedModule
     ],
     declarations: [
         WestLanguagesComponent,
-        WordsListComponent
+        WordsListComponent,
+        WordDialog,
+        PractiseComponent
     ],
-    providers: [],
+    entryComponents: [
+        WordDialog
+    ],
+    providers: [
+        WordsApi, WordsState, WordsFacade
+    ],
     bootstrap: [WestLanguagesComponent]
 })
 export class WestLanguagesModule { }

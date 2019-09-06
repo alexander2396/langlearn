@@ -2,7 +2,7 @@
 using Langlearn.Application.Interfaces.Mapping;
 using Langlearn.Domain.Entities.WestLanguages;
 
-namespace Langlearn.Application.Languages.Queries.GetLanguagesList
+namespace Langlearn.Application.WestLanguages.Languages.Queries.GetLanguagesList
 {
 	public class LanguageLookupModel : IHaveCustomMapping
 	{
