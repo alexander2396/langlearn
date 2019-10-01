@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { WestLanguagesState } from '../state/west-languages.state';
 
 @Component({
-	selector: 'app-root',
 	templateUrl: './west-languages.component.html',
 	styleUrls: ['./west-languages.component.scss']
 })

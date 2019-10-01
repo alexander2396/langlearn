@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Langlearn.Application.Interfaces;
@@ -13,9 +14,9 @@ namespace Langlearn.Application.WestLanguages.Words.Commands.DeleteWord
 
 		public class DeleteWordCommandHandler : IRequestHandler<DeleteWordCommand>
 		{
-			private readonly IWestLanguagesContext _context;
+			private readonly ILanguagerContext _context;
 
-			public DeleteWordCommandHandler(IWestLanguagesContext context)
+			public DeleteWordCommandHandler(ILanguagerContext context)
 			{
 				_context = context;
 			}
@@ -28,6 +29,8 @@ namespace Langlearn.Application.WestLanguages.Words.Commands.DeleteWord
 				{
 					throw new NotFoundException(nameof(Word), request.Id);
 				}
+
+                File.Delete($"wwwroot/Assets/Mp3/{entity.Text}.mp3");
 
 				_context.Words.Remove(entity);
 

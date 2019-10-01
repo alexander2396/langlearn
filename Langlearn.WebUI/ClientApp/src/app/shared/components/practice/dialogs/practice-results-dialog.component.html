@@ -1,0 +1,13 @@
+<mat-dialog-content>
+
+    <h4>Results</h4>
+
+    <div class="inner">
+        {{ data.correctCount }} / {{ data.totalCount }}
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button (click)="dialogRef.close()">Close</button>
+</mat-dialog-actions>

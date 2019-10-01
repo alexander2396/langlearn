@@ -1,0 +1,46 @@
+<mat-card>
+
+    <div class="card-header">
+		<h2>Practice {{ title }}</h2>
+    </div>
+
+    <mat-button-toggle-group #group="matButtonToggleGroup" class="mt-4 ml-5">
+        <mat-button-toggle [checked]="!reverse" (click)="changeMode(false)">
+            {{ btnTitle }}
+        </mat-button-toggle>
+        <mat-button-toggle [checked]="reverse" (click)="changeMode(true)">
+            {{ reverseBtnTitle }}
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div class="card-body">
+        <ng-container *ngIf="questions">
+            <div class="practice-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="content">
+                        <button *ngIf="!reverse" mat-icon-button (click)="playSpeech(questions[currentQuestionIndex].text)">
+                            <mat-icon class="sound-icon">volume_up</mat-icon>
+                        </button>
+                        <span [style.font-size.px]="fontSize" *ngIf="!reverse" [matTooltip]="questions[currentQuestionIndex].translation">
+                            {{ questions[currentQuestionIndex].text }}
+                        </span>
+                        <span *ngIf="reverse" [matTooltip]="questions[currentQuestionIndex].text">
+                            {{ questions[currentQuestionIndex].translation }}
+                        </span>
+                    </div>
+                    <div class="counter">{{ currentQuestionIndex + 1 }} / {{ questions.length }}</div>
+                </div>            
+                <div class="answer">
+                    <mat-form-field class="example-full-width">
+                        <input matInput [(ngModel)]="answer" autocomplete="off" />
+                    </mat-form-field>              
+                </div>
+                <div class="buttons">
+                    <button color="primary" mat-raised-button (click)="submit()" [disabled]="!answer || locked">Confirm</button>
+                </div>
+            </div>
+        </ng-container>
+        <div *ngIf="!questions">Loading...</div>
+    </div>
+
+</mat-card>

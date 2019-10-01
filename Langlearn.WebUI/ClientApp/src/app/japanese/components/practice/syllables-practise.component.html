@@ -1,0 +1,19 @@
+<ng-container *ngIf="!questions || questions.length == 0">
+    <div class="main-container">
+        <div matRipple class="item" (click)="selectSyllabary(SyllabaryType.Hiragana)">
+            <div class="title">Hiragana</div>
+            <div class="original">ひらがな</div>
+        </div>
+        <div matRipple class="item" (click)="selectSyllabary(SyllabaryType.Katakana)">
+            <div class="title">Katakana</div>
+            <div class="original">カタカナ</div>
+        </div>
+    </div>
+</ng-container>
+
+<practice *ngIf="questions && questions.length > 0" 
+    [questions]="questions" 
+    [btnTitle]="'From kana'"
+    [reverseBtnTitle]="'From romaji'"
+    [fontSize]='50'
+    (complete)="complete($event)"></practice>

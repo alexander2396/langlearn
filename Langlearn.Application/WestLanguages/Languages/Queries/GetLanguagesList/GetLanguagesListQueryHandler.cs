@@ -11,10 +11,10 @@ namespace Langlearn.Application.WestLanguages.Languages.Queries.GetLanguagesList
 {
 	public class GetLanguagesListQueryHandler : IRequestHandler<GetLanguagesListQuery, List<LanguageLookupModel>>
 	{
-		private readonly IWestLanguagesContext _context;
+		private readonly ILanguagerContext _context;
 		private readonly IMapper _mapper;
 
-		public GetLanguagesListQueryHandler(IWestLanguagesContext context, IMapper mapper)
+		public GetLanguagesListQueryHandler(ILanguagerContext context, IMapper mapper)
 		{
 			_context = context;
 			_mapper = mapper;

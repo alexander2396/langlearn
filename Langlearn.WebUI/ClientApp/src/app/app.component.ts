@@ -12,6 +12,7 @@ import { Component } from '@angular/core';
 export class AppComponent implements OnInit {
 
 	public selectedLanguage: LanguageModel;
+	public isJapanese: boolean = false;
 	public languages: Observable<LanguageModel[]> = this.coreFacade.getLanguages$();
 	public isUpdating$: Observable<boolean>;
 	

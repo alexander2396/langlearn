@@ -16,10 +16,32 @@ namespace Langlearn.DataAccess.Configurations.WestLanguages
 				.IsRequired()
 				.HasMaxLength(50);
 
-			builder.HasOne(e => e.Language)
+            builder.Property(e => e.CorrectCount)
+                .IsRequired()
+                .HasDefaultValue(0);
+
+            builder.Property(e => e.WrongCount)
+                .IsRequired()
+                .HasDefaultValue(0);
+
+            builder.Property(e => e.Translation)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.HasOne(e => e.Language)
 				.WithMany(l => l.Words)
 				.HasForeignKey(e => e.LanguageId)
-				.OnDelete(DeleteBehavior.Cascade);
-		}
+				.OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(e => e.WordCategory)
+                .WithMany(wc => wc.Words)
+                .HasForeignKey(e => e.WordCategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasOne(e => e.User)
+                .WithMany(u => u.Words)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
 	}
 }

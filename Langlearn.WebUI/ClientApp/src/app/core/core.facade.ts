@@ -16,7 +16,10 @@ export class CoreFacade {
 
     loadLanguages(): Subscription {
         return this.languagesApi.getAll()
-            .pipe(tap(languages => this.languagesState.setLanguages(languages)))
+            .pipe(tap(languages => this.languagesState.setLanguages(languages.map(l => {
+                l.name = l.name.charAt(0).toUpperCase() + l.name.slice(1);
+                return l;
+            }))))
             .subscribe();
     }
 

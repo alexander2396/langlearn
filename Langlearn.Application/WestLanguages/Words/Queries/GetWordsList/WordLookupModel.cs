@@ -10,14 +10,18 @@ namespace Langlearn.Application.WestLanguages.Words.Queries.GetWordsList
 		public string Text { get; set; }
 		public string Translation { get; set; }
 		public int LanguageId { get; set; }
+        public int? WordCategoryId { get; set; }
+        public bool IsActive { get; set; }
 
-		public void CreateMappings(Profile configuration)
+        public void CreateMappings(Profile configuration)
 		{
 			configuration.CreateMap<Word, WordLookupModel>()
 				.ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
 				.ForMember(dto => dto.Text, opt => opt.MapFrom(l => l.Text))
 				.ForMember(dto => dto.Translation, opt => opt.MapFrom(l => l.Translation))
-				.ForMember(dto => dto.LanguageId, opt => opt.MapFrom(l => l.LanguageId));
+				.ForMember(dto => dto.LanguageId, opt => opt.MapFrom(l => l.LanguageId))
+                .ForMember(dto => dto.WordCategoryId, opt => opt.MapFrom(l => l.WordCategoryId))
+                .ForMember(dto => dto.IsActive, opt => opt.MapFrom(l => l.IsActive));
 		}
 	}
 }

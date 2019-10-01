@@ -1,0 +1,22 @@
+<mat-dialog-content>
+
+    <h2 mat-dialog-title>{{data.dialogTitle}}</h2>
+
+    <form [formGroup]="wordCategoryForm" autocomplete="off">
+        
+        <mat-form-field>
+            <input matInput #name placeholder="Name" formControlName="name">
+            <mat-error *ngIf="wordCategoryForm.controls.name.errors && wordCategoryForm.controls.name.errors.required">
+                Name is Required
+            </mat-error>
+        </mat-form-field>
+
+    </form>
+    
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button (click)="this.dialogRef.close()" [disabled]="this.wordCategoryForm.disabled">Cancel</button>
+    <button color="primary" [disabled]="!wordCategoryForm.valid || this.wordCategoryForm.disabled || wordCategoryForm.pristine" 
+        mat-raised-button [mat-dialog-close]="wordCategoryForm.value">Submit</button>
+</mat-dialog-actions>

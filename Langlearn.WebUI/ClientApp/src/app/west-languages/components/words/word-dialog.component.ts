@@ -16,17 +16,15 @@ export class WordDialog implements OnInit {
     ) {
         this.wordForm = new FormGroup({
             id: new FormControl(this.data.word.id),
-            text: new FormControl(this.data.word.text, [Validators.required, Validators.pattern("^[a-zA-Z]+$")]),
+            text: new FormControl(this.data.word.text, [Validators.required]),
             translation: new FormControl(this.data.word.translation, Validators.required),
+            wordCategoryId: new FormControl(this.data.word.wordCategoryId),
+            isActive: new FormControl(this.data.word.isActive),
             languageId: new FormControl(this.data.word.languageId)
         })
     }
 
     public ngOnInit() {
        
-    }
-
-    public submitForm(): void {
-        console.log(this.wordForm.controls.text)
     }
 }

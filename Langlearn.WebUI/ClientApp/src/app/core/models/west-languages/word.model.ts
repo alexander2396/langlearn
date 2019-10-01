@@ -3,4 +3,6 @@ export interface WordModel {
     languageId: number;
     text: string;
     translation: string;
+    wordCategoryId: number;
+    isActive: boolean;
 }

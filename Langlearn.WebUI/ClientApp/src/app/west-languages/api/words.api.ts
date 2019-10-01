@@ -3,7 +3,9 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { WordModel } from 'src/app/core/models/west-languages/word.model';
-import { WordsListQuery } from '../components/models/wordsListQuery';
+import { WordsListQuery } from '../models/wordsListQuery';
+import { WordsListModel } from '../models/wordsListModel';
+import { PracticeResult } from '../../core/models/practiceResult';
 
 @Injectable()
 export class WordsApi {
@@ -12,7 +14,7 @@ export class WordsApi {
 
     constructor(private http: HttpClient) {}
 
-    public getAll(query: WordsListQuery): Observable<WordModel[]> {
+    public getList(query: WordsListQuery): Observable<WordsListModel> {
         let params = new HttpParams().set('languageId', query.languageId.toString());
 
         if (query.skip) {
@@ -23,11 +25,19 @@ export class WordsApi {
             params = params.set('take', query.take.toString());
         }
 
-        if (query.randomOrder) {
-            params = params.set('randomOrder', query.randomOrder.toString());
+        if (query.forPractice) {
+            params = params.set('forPractice', query.forPractice.toString());
         }
 
-        return this.http.get<WordModel[]>(this.API + 'getAll', { params: params });
+        if (query.activeOnly) {
+            params = params.set('activeOnly', query.activeOnly.toString());
+        }
+
+        if (query.wordCategoryId) {
+            params = params.set('wordCategoryId', query.wordCategoryId.toString());
+        }
+
+        return this.http.get<WordsListModel>(this.API + 'getList', { params: params });
     }
 
     public get(id: number): Observable<WordModel> {
@@ -44,5 +54,13 @@ export class WordsApi {
 
     public delete(id: number): Observable<any> {
         return this.http.delete<WordModel>(this.API + 'delete?id=' + id);
+    }
+
+    public toggleIsActive(id: number): Observable<any> {
+        return this.http.post(this.API + 'toggleIsActive?id=' + id, null);
+    }
+
+    public postPracticeResult(result: PracticeResult): Observable<any> {
+        return this.http.post(this.API + 'postPracticeResult', result);
     }
 }

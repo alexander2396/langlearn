@@ -5,21 +5,22 @@ using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-//using NSwag.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using System.Reflection;
 using Langlearn.Application.Infrastructure;
 using Langlearn.Application.Infrastructure.AutoMapper;
 using Langlearn.Application.Interfaces;
 using Langlearn.Application.WestLanguages.Languages.Queries.GetLanguagesList;
 using Langlearn.Application.WestLanguages.Words.Commands.CreateWord;
-//using Northwind.Common;
-//using Northwind.Infrastructure;
+using Langlearn.Application.Infrastructure.Providers;
 using Langlearn.DataAccess;
-//using Northwind.WebUI.Filters;
+using Langlearn.Infrastructure.TextToSpeech;
 
 namespace Langlearn.WebUI
 {
@@ -28,14 +29,19 @@ namespace Langlearn.WebUI
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
-		}
+
+            System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:/Users/okalashnykov/source/My First Project-ea28210ed1a1.json");
+
+        }
 
 		public IConfiguration Configuration { get; }
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			// Add AutoMapper
-			services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
+            services.AddAuthentication(IISDefaults.AuthenticationScheme);
+
+            // Add AutoMapper
+            services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
 			// Add framework services.
 			//services.AddTransient<INotificationService, NotificationService>();
@@ -46,11 +52,15 @@ namespace Langlearn.WebUI
 			//services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
-			services.AddDbContext<IWestLanguagesContext, WestLanguagesContext>(options =>
-				options.UseSqlServer(Configuration.GetConnectionString("WestLanguagesDatabase")));
+            services.AddTransient<ITextToSpeechService, TextToSpeechService>();
+
+            services.AddTransient<IAuthorizationProvider, AuthorizationProvider>();
+
+			services.AddDbContext<ILanguagerContext, LanguagerContext>(options =>
+				options.UseSqlServer(Configuration.GetConnectionString("LanguagerDatabase")));
 
 			services.AddMvc()
-				.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(typeof(CreateWordCommandValidator).Assembly));
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(typeof(CreateWordCommandValidator).Assembly));
 
 			// Customise default API behavour
 			services.Configure<ApiBehaviorOptions>(options =>
@@ -72,16 +82,16 @@ namespace Langlearn.WebUI
 				app.UseHsts();
 			}
 
-			app.UseCors(builder =>
-			{
-				builder
-					.AllowAnyOrigin()
-					.AllowAnyMethod()
-					.AllowAnyHeader()
-					.AllowCredentials();
-			});
+            app.UseCors(builder =>
+            {
+                builder
+                    .WithOrigins(Configuration.GetSection("AllowedOrigins").Get<string[]>())
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            });
 
-			app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			//app.UseSpaStaticFiles();
 

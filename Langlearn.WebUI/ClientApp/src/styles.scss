@@ -96,3 +96,15 @@ table {
     height:             42px;
     vertical-align:     middle;
 }
+
+.mat-paginator {
+    background: unset;
+}
+
+.mat-tooltip {
+    font-size: 16px;
+}
+
+.mat-row.disabled {
+    background-color: $disabled-grey-color;
+}

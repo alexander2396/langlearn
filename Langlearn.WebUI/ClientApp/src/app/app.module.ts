@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './shared/shared.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CredentialsInterceptor } from './interceptors/credentials-interceptor';
 
 @NgModule({
     imports: [
@@ -19,7 +21,13 @@ import { SharedModule } from './shared/shared.module';
     declarations: [
         AppComponent
     ],
-    providers: [],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: CredentialsInterceptor,
+            multi: true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

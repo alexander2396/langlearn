@@ -5,15 +5,20 @@ import { MaterialModule } from './material.module';
 import { ConfirmDialog } from './components/confirm-dialog.component';
 import { GenericSnackbarComponent } from './components/snackbars/generic-snackbar.component';
 import { SnackbarService } from './services/snackbar.service';
+import { PractiseComponent } from './components/practice/practice.component';
+import { PracticeResultsDialog } from './components/practice/dialogs/practice-results-dialog.component';
 
 @NgModule({
     declarations: [
         ConfirmDialog,
-        GenericSnackbarComponent
+        GenericSnackbarComponent,
+        PractiseComponent,
+        PracticeResultsDialog
     ],
     entryComponents: [
         ConfirmDialog,
-        GenericSnackbarComponent
+        GenericSnackbarComponent,
+        PracticeResultsDialog
     ],
     imports: [
         CommonModule,
@@ -24,6 +29,6 @@ import { SnackbarService } from './services/snackbar.service';
     providers: [
         SnackbarService
     ],
-    exports: [ReactiveFormsModule, CommonModule, MaterialModule, ConfirmDialog, FormsModule]
+    exports: [ReactiveFormsModule, CommonModule, MaterialModule, ConfirmDialog, FormsModule, PractiseComponent]
 })
 export class SharedModule { }

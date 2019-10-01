@@ -8,7 +8,12 @@ import { WordsFacade } from './facade/words.facade';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { WordDialog } from './components/words/word-dialog.component';
-import { PractiseComponent } from './components/practise/practise.component';
+import { WordsPractiseComponent } from './components/practise/words-practise.component';
+import { WordCategoriesListComponent } from './components/word-categories/word-categories-list.component';
+import { WordCategoriesApi } from './api/wordCategories.api';
+import { WordCategoriesState } from './state/word-categories.state';
+import { WordCategoriesFacade } from './facade/word-categories.facade';
+import { WordCategoryDialog } from './components/word-categories/word-category-dialog.component';
 
 @NgModule({
     imports: [
@@ -18,15 +23,16 @@ import { PractiseComponent } from './components/practise/practise.component';
     ],
     declarations: [
         WestLanguagesComponent,
-        WordsListComponent,
-        WordDialog,
-        PractiseComponent
+        WordsListComponent, WordDialog, WordsPractiseComponent,
+        WordCategoriesListComponent, WordCategoryDialog
     ],
     entryComponents: [
-        WordDialog
+        WordDialog,
+        WordCategoryDialog
     ],
     providers: [
-        WordsApi, WordsState, WordsFacade
+        WordsApi, WordsState, WordsFacade,
+        WordCategoriesApi, WordCategoriesState, WordCategoriesFacade
     ],
     bootstrap: [WestLanguagesComponent]
 })

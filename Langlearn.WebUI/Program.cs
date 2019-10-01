@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore;
 using System;
@@ -21,11 +22,11 @@ namespace Langlearn.WebUI
 			{
 				try
 				{
-					var context = scope.ServiceProvider.GetService<IWestLanguagesContext>();
+					var context = scope.ServiceProvider.GetService<ILanguagerContext>();
 
-					var concreteContext = (WestLanguagesContext)context;
+					var concreteContext = (LanguagerContext)context;
 					concreteContext.Database.Migrate();
-					WestLanguagesInitializer.Initialize(concreteContext);
+					DatabaseInitializer.Initialize(concreteContext);
 				}
 				catch (Exception ex)
 				{
@@ -39,8 +40,9 @@ namespace Langlearn.WebUI
 
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
-				.UseStartup<Startup>();
-	}
+                   .UseIISIntegration()
+                   .UseStartup<Startup>();
+    }
 
 	//public static void Main(string[] args)
 	//{

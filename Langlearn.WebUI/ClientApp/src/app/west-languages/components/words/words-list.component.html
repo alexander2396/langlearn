@@ -7,30 +7,46 @@
 
 	<div class="card-body">
 
+		<mat-form-field>
+			<mat-label>Word Category</mat-label>
+			<mat-select (selectionChange)="setFilterValue('wordCategoryId', $event.value)">
+				<mat-option>All</mat-option>
+				<mat-option *ngFor="let category of wordCategories" [value]="category.id">
+					{{ category.name }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
 		<table *ngIf="!(isUpdating$ | async) && (words | async).length > 0" mat-table [dataSource]="words" class="mat-elevation-z8">
 
 			<!-- Id Column -->
 			<ng-container matColumnDef="id">
-			  <th mat-header-cell *matHeaderCellDef> Id </th>
-			  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+				<th mat-header-cell *matHeaderCellDef> Id </th>
+				<td mat-cell *matCellDef="let element"> {{element.id}} </td>
 			</ng-container>
-		  
+			
 			<!-- Text Column -->
 			<ng-container matColumnDef="text">
-			  <th mat-header-cell *matHeaderCellDef> Text </th>
-			  <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+				<th mat-header-cell *matHeaderCellDef> Text </th>
+				<td mat-cell *matCellDef="let element"> {{element.text}} </td>
 			</ng-container>
-		  
+			
 			<!-- Translation Column -->
 			<ng-container matColumnDef="translation">
-			  <th mat-header-cell *matHeaderCellDef> Translation </th>
-			  <td mat-cell *matCellDef="let element"> {{element.translation}} </td>
+				<th mat-header-cell *matHeaderCellDef> Translation </th>
+				<td mat-cell *matCellDef="let element"> {{element.translation}} </td>
 			</ng-container>
 
 			<!-- Actions Column -->
 			<ng-container matColumnDef="actions" [stickyEnd]="true">
 				<th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
 				<td mat-cell *matCellDef="let row" class="text-center">
+					<mat-slide-toggle class="mr-4"
+						[checked]="row.isActive" (change)="toggleIsActive(row)">
+					</mat-slide-toggle>
+					<button mat-icon-button (click)="playSpeech(row)">
+						<mat-icon>volume_up</mat-icon>
+					</button>
 					<button mat-icon-button (click)="updateWord(row)">
 						<mat-icon>edit</mat-icon>
 					</button>
@@ -39,16 +55,17 @@
 					</button>
 				</td>
 			</ng-container>
-		  
+			
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.disabled]="!row.isActive"></tr>
 
 		</table>
 
 		<div *ngIf="!(isUpdating$ | async) && (words | async).length === 0">No data</div>
 
 		<div class="d-flex justify-content-center"><mat-spinner *ngIf="isUpdating$ | async"></mat-spinner></div>
-		
+			
+		<mat-paginator class="mat-paginator-sticky" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
 
 	</div>
 

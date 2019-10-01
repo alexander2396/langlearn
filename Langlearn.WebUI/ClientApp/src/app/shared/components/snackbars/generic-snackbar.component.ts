@@ -5,7 +5,7 @@ import { SnackbarData } from './SnackbarData';
 @Component({
     selector: 'generic-snackbar',
     template: `
-    <mat-grid-list cols="4" [rowHeight]="data.gridHeight">
+    <mat-grid-list cols="4">
         <mat-grid-tile>
             <mat-icon>{{data.icon}}</mat-icon>
         </mat-grid-tile>
