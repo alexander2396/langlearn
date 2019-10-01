@@ -4,8 +4,8 @@ import { WordModel } from 'src/app/core/models/west-languages/word.model';
 import { WordsFacade } from '../../facade/words.facade';
 import { WestLanguagesState } from '../../state/west-languages.state';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { WordsListQuery } from '../models/wordsListQuery';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { WordsListQuery } from '../../models/wordsListQuery';
 
 @Component({
     templateUrl: './practise.component.html',
@@ -101,7 +101,7 @@ export class PractiseComponent implements OnInit {
         this.wordsFacade.loadWords({
             languageId: WestLanguagesState.languageId,
             take: 10,
-            randomOrder: true
+            forPractice: true
         } as WordsListQuery);   
 
         if (!this.wordsSubscription) {
